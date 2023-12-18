@@ -1,14 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from '../../redux/contacts/selectors';
-import { selectFilter } from '../../redux/filter/selector';
+import { selectFiltredContacts } from '../../redux/contacts/selectors';
 import { deleteContacts } from '../../redux/contacts/operations';
 import { ContactsBtn, ContactsItem, ContactsList } from './ContactList.styled';
 import Notiflix from 'notiflix';
 
 const ContactList = () => {
-  const { contacts } = useSelector(selectContacts);
-  const { filter } = useSelector(selectFilter);
-
   const dispatch = useDispatch();
 
   const deleteContact = ({ id, name }) => {
@@ -19,10 +15,7 @@ const ContactList = () => {
     );
   };
 
-  const filtred = filter.toLowerCase();
-  const contactList = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filtred)
-  );
+  const contactList = useSelector(selectFiltredContacts);
 
   return (
     <ContactsList>
