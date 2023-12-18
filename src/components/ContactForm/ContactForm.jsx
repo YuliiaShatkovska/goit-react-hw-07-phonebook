@@ -3,8 +3,9 @@ import { nanoid } from 'nanoid';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContactAction } from '../../redux/contacts/contactsSlice';
 import { Title } from 'components/Title/Title';
+import { addContact } from '../../redux/contacts/operations';
+import { selectContacts } from '../../redux/contacts/selectors';
 import {
   ContactErrorMessage,
   ContactFormBtn,
@@ -27,7 +28,7 @@ const ContactForm = () => {
   const formNameId = nanoid();
   const numberId = nanoid();
 
-  const { contacts } = useSelector(state => state.contacts);
+  const { contacts } = useSelector(selectContacts);
 
   const dispatch = useDispatch();
 
@@ -41,7 +42,7 @@ const ContactForm = () => {
       return;
     }
 
-    dispatch(addContactAction(name, number));
+    dispatch(addContact({ name, number }));
 
     resetForm();
   };
