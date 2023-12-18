@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import Notiflix from 'notiflix';
 import { Title } from 'components/Title/Title';
 import { addContact } from '../../redux/contacts/operations';
 import { selectContacts } from '../../redux/contacts/selectors';
@@ -43,6 +44,9 @@ const ContactForm = () => {
     }
 
     dispatch(addContact({ name, number }));
+
+    Notiflix.Notify.info(`
+    The contact ${name} has been successfully added!`);
 
     resetForm();
   };

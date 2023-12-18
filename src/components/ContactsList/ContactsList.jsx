@@ -3,6 +3,7 @@ import { selectContacts } from '../../redux/contacts/selectors';
 import { selectFilter } from '../../redux/filter/selector';
 import { deleteContacts } from '../../redux/contacts/operations';
 import { ContactsBtn, ContactsItem, ContactsList } from './ContactList.styled';
+import Notiflix from 'notiflix';
 
 const ContactList = () => {
   const { contacts } = useSelector(selectContacts);
@@ -10,8 +11,12 @@ const ContactList = () => {
 
   const dispatch = useDispatch();
 
-  const deleteContact = id => {
+  const deleteContact = ({ id, name }) => {
     dispatch(deleteContacts(id));
+    Notiflix.Notify.info(
+      `
+    The contact ${name} has been successfully deleted!`
+    );
   };
 
   const filtred = filter.toLowerCase();
@@ -27,7 +32,7 @@ const ContactList = () => {
             <b>{el.name}</b>: {el.number}
           </div>
 
-          <ContactsBtn type="button" onClick={() => deleteContact(el.id)}>
+          <ContactsBtn type="button" onClick={() => deleteContact(el)}>
             Delete
           </ContactsBtn>
         </ContactsItem>
